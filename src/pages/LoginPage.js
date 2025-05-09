@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'; // 👈 useState agregado
+import React, { useEffect, useState } from 'react'; // useState 
 import { useLogin, useNotify } from 'react-admin';
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
@@ -9,7 +9,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const notify = useNotify();
 
-  const [loginKey, setLoginKey] = useState(0); // 👈 NUEVO: key para forzar re-render
+  const [loginKey, setLoginKey] = useState(0); // key para forzar re-render
 
   useEffect(() => {
     const auth = localStorage.getItem('auth');
@@ -19,7 +19,7 @@ const LoginPage = () => {
   }, [navigate]);
 
   useEffect(() => {
-    // Si vienes del logout, forzamos reinicio del botón
+    // Si viene del logout, forzamos reinicio del botón
     const logoutFlag = sessionStorage.getItem('logout_done');
     if (logoutFlag) {
       setLoginKey(prev => prev + 1);
@@ -32,7 +32,7 @@ const LoginPage = () => {
       <h2>Reservatec Admin</h2>
 
       <GoogleLogin
-        key={loginKey} // 👈 Usamos key para forzar reinicio del botón
+        key={loginKey} // Usamos key para forzar reinicio del botón
         onSuccess={async (credentialResponse) => {
             try {
               const idToken = credentialResponse.credential;

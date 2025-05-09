@@ -2,7 +2,9 @@ import axios from 'axios';
 
 const authProvider = {
   login: async ({ email, name, photo }) => {
+    // const response = await axios.post('http://reservatec-tesis-backend-8asuen-298379-31-220-104-112.traefik.me/api/admin/validar', {
     const response = await axios.post('http://localhost:8080/api/admin/validar', {
+
       email,
       name,
       photo,
@@ -10,7 +12,7 @@ const authProvider = {
 
     const data = response.data;
 
-    // ✅ Verifica que venga el token
+    // Verifica el token
     if (!data.token) {
       throw new Error("Token no recibido del backend");
     }
@@ -21,7 +23,7 @@ const authProvider = {
 
   logout: () => {
     localStorage.removeItem('auth');
-    sessionStorage.setItem('logout_done', '1'); // 👈 Marca para reiniciar botón
+    sessionStorage.setItem('logout_done', '1'); 
     return Promise.resolve();
   },
 
@@ -51,7 +53,7 @@ checkAuth: () => {
   
       if (exp && exp < now) {
         localStorage.removeItem('auth');
-        return Promise.reject(); // Token expirado → rechazar
+        return Promise.reject(); // Token expirado
       }
   
       return Promise.resolve();
@@ -71,7 +73,7 @@ checkAuth: () => {
     if ((status === 401 || status === 403) && isProtected) {
       localStorage.removeItem('auth');
   
-      // ✅ Llama a la notificación si está definida
+      // Llama a la notificación si está definida
       if (window && typeof window.notifySessionExpired === 'function') {
         window.notifySessionExpired();
       }
